@@ -39,7 +39,7 @@
   <body class="d-flex flex-column min-vh-100">
       <!-- Logo, login and register bar -->
     <nav class="navbar  navbar-dark bg-dark" >
-        <a class="navbar-brand mx-5" href="#"><img src="static/img/logo.png" style="width:70px; height:70px" alt="" srcset=""></a>
+        <a class="navbar-brand mx-5" href="{% url 'jaguarete01:index' %}"><img src="{% static 'img/logo.png' %}" style="width:70px; height:70px" alt="" srcset=""></a>
     <ul class="nav justify-content-end">
         <li class="nav-item">
             
@@ -60,7 +60,7 @@
     <!-- collapsible toggle menu bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Home</a>
+          <a class="navbar-brand" href="{% url 'jaguarete01:index' %}">Home</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -70,7 +70,7 @@
                 <a class="nav-link active" aria-current="page" href="#">Categorías</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Acerca de...</a>
+                <a class="nav-link" href="{% url 'jaguarete01:acerca_de' %}">Acerca de...</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">

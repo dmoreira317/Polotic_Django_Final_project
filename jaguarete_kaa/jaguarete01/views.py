@@ -4,3 +4,7 @@ from django.shortcuts import render
 def index(request):
     dictionary = {}
     return render(request, 'index.html', context=dictionary)
+
+def acerca_de(request):
+    dictionary={}
+    return render(request, 'acerca_de.html', context=dictionary)

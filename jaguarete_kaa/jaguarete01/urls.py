@@ -8,4 +8,5 @@ app_name = 'jaguarete01'
 urlpatterns = [
     # marvelapp pages
     path("index/", views.index, name = "index"),
+    path("acerca_de/", views.acerca_de, name="acerca_de")
 ]
