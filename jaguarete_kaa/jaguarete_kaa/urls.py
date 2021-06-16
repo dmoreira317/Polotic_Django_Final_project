@@ -20,5 +20,6 @@ from jaguarete01 import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('jaguarete01.urls'))
+    path('', include('jaguarete01.urls')),
+    path('', views.index, name='index'),
 ]

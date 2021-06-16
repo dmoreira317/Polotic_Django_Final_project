@@ -11,9 +11,15 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATE_DIR = os.path.join(BASE_DIR, "jaguarete01/templates")
+print(TEMPLATE_DIR)
+STATIC_DIR = os.path.join(BASE_DIR, "jaguarete01/static/")
+print(STATIC_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -55,7 +61,7 @@ ROOT_URLCONF = 'jaguarete_kaa.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['jaguarete01/templates'],
+        'DIRS': [TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,3 +130,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATICFILES_DIRS = [STATIC_DIR]
