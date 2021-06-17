@@ -17,9 +17,11 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
 from jaguarete01 import views
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('jaguarete01.urls')),
-    path('', views.index, name='index'),
+    path('', RedirectView.as_view(url='index/'))
+    
 ]
