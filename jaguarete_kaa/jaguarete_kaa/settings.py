@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'jaguarete01',
+    'widget_tweaks',
+
 ]
 
 MIDDLEWARE = [
@@ -110,10 +112,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+LANGUAGE_CODE = 'es'
+TIME_ZONE = 'America/Argentina/Buenos_Aires'
 USE_I18N = True
 
 USE_L10N = True
