@@ -48,4 +48,4 @@ def sign_up_form(request):
     dictionary = {
             'form': form
             }    
-    return render(request, "sign_up_form.html", context=dictionary)
+    return render(request, "registro.html", context=dictionary)
