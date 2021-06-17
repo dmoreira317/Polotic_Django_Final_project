@@ -34,7 +34,7 @@ def sign_up_form(request):
             password = form.clean_password2()
             form.save()
 
-            return redirect('index/')
+            return redirect('resultado_registro/')
         else:
             print("Invalid form request")
             error = form.errors
@@ -49,3 +49,54 @@ def sign_up_form(request):
             'form': form
             }    
     return render(request, "registro.html", context=dictionary)
+
+def resultado_registro(request):
+    dictionary = {}
+    return render(request, "resultado_registro.html", context=dictionary)
+
+def login_form(request):
+    username = 'not logged in'
+    user = request.user
+    form = AuthenticationForm()
+    dictionary = {
+        'form': form
+    }
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            if username and password:
+                user = authenticate(username=username, password=password)
+                if user is not None:
+                    if user.is_active:
+                        request.session['username'] = username
+                        login(request, user)
+            print('form and session started')
+            return redirect('resultado_login/')
+        else:
+            error = form.errors
+            print(error)
+            dictionary = {
+                'error': error
+            }
+    else:
+        form = AuthenticationForm()
+
+    dictionary = {
+    'object_list': user,
+    'form': form,
+    }
+          
+    return render(request, "login.html", context=dictionary)
+
+def resultado_login(request):
+    dictionary = {}
+    return render(request, "resultado_login.html", context=dictionary)
+
+@login_required(login_url='/login/')
+def sign_out(request): # my logout view
+    request.session.clear()
+    logout(request)
+    print("All sessions closed")
+    return render(request, "logout.html")

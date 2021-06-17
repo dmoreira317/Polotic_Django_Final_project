@@ -42,17 +42,22 @@
         <a class="navbar-brand mx-5" href="{% url 'jaguarete01:index' %}"><img src="{% static 'img/logo.png' %}" style="width:70px; height:70px" alt="" srcset=""></a>
     <ul class="nav justify-content-end">
         <li class="nav-item">
-            
         </li>
+        
+        {% if request.user.is_authenticated %}
+        {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="#">Login</a>
+          <a class="nav-link" href="{% url 'jaguarete01:login'%}">Login</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'jaguarete01:sign_up_form'%}">Registro</a>
         </li>
+        {% endif %}
+        {% if request.user.is_authenticated %}
         <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1">Log Out</a>
-          </li>
+          <a class="nav-link" href="{% url 'jaguarete01:logout'%}" tabindex="-1">Log Out</a>
+        </li>
+        {% endif %}
         <li class="nav-item">
           <a class="nav-link" href="#" tabindex="-1">Carrito</a>
         </li>
