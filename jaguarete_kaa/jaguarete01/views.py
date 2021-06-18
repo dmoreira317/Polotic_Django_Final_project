@@ -100,3 +100,7 @@ def sign_out(request): # my logout view
     logout(request)
     print("All sessions closed")
     return render(request, "logout.html")
+
+def producto_detalle(request):
+    dictionary = {}
+    return render(request, "producto.html", context=dictionary)
