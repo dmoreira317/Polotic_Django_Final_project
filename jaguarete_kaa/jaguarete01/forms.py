@@ -4,6 +4,7 @@ from django.forms.models import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import authenticate
+from jaguarete01.models import Producto
 
 
 class SignUpForm(UserCreationForm):
@@ -14,4 +15,10 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username','email','first_name', 'last_name', 'password1', 'password2']
-        
+
+class NuevoProductoForm(ModelForm):
+    class Meta:
+        model=Producto
+        fields=[
+            'titulo','categoria_base','detalle','precio','imagen'
+        ]

@@ -13,9 +13,10 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView, View
+from django.views.generic import ListView, DetailView, View, CreateView
 from django.utils import timezone
 from .models import Producto, Carrito, ProductoAgregado
+from jaguarete01.forms import NuevoProductoForm
 import pprint
 import json
 import random
@@ -211,3 +212,12 @@ def reducir_cantidad_producto(request, pk):
         #add message doesnt have order
         messages.info(request, "No tiene un carrito")
         return redirect("jaguarete01:resumen_compra")
+
+class NuevoProductoView(CreateView):
+    form_class = NuevoProductoForm
+    template_name = 'nuevo_producto.html'
+    success_url = 'nuevo_producto_resultado'
+
+def nuevo_producto_resultado(request):
+    dictionary = {}
+    return render(request, "nuevo_producto_resultado.html", context=dictionary)

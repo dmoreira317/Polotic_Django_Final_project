@@ -16,7 +16,7 @@ class Producto(models.Model):
     detalle = models.CharField(max_length=1000, default='N/A')
     precio = models.FloatField()
     imagen = models.ImageField(upload_to='uploaded_images')
-    fecha_creacion = models.DateTimeField()
+    fecha_creacion = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.titulo
