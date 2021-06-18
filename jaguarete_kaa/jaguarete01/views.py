@@ -218,9 +218,10 @@ def reducir_cantidad_producto(request, pk):
         messages.info(request, "No tiene un carrito")
         return redirect("jaguarete01:resumen_compra")
 
-class NuevoProductoView(LoginRequiredMixin, CreateView):
+class NuevoProductoView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
+    permission_required = 'jaguarete01.can_add_productos'
     
     form_class = NuevoProductoForm
     template_name = 'nuevo_producto.html'

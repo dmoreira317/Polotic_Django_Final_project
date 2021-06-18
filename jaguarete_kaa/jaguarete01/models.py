@@ -11,6 +11,9 @@ class Categoria(models.Model):
         return self.descripcion
 
 class Producto(models.Model):
+    class Meta:
+        permissions = (("can_add_productos", "Can add productos"),)
+
     titulo = models.CharField(max_length=100, unique=True)
     categoria_base = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     detalle = models.CharField(max_length=1000, default='N/A')
