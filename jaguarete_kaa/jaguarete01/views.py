@@ -7,9 +7,15 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView, DetailView, View
+from django.utils import timezone
+from .models import Producto, Carrito, ProductoAgregado
 import pprint
 import json
 import random
@@ -101,6 +107,106 @@ def sign_out(request): # my logout view
     print("All sessions closed")
     return render(request, "logout.html")
 
-def producto_detalle(request):
-    dictionary = {}
-    return render(request, "producto.html", context=dictionary)
+class VistaProducto(DetailView):
+    model = Producto
+    template_name = "producto.html"
+
+@login_required(login_url= '/login/')
+class VistaResumenCompra(LoginRequiredMixin, View):
+    def get(self, *args, **kwargs):
+        try:
+            compra = Carrito.objects.get(user=self.request.user, ya_pedido=False)
+            context= {
+                'objeto': compra
+            }
+            return render(self.request, 'resumen_compra.html')
+        except ObjectDoesNotExist:
+            messages.error(self.request, 'No tiene un carrito todavía')
+            return redirect('/')
+
+@login_required(login_url= '/login/')
+def agregar_al_carrito(request, pk):
+    producto = get_object_or_404(Producto, pk=pk)
+    producto_agregado, creado = ProductoAgregado.objects.get_or_create(
+        producto = producto,
+        usuario = request.user,
+        ya_agregado = False
+    )
+
+    producto_existente_carrito = Carrito.objects.filter(user=request.user, ya_pedido=False)
+
+    if producto_existente_carrito.exists():
+        agrega_producto = producto_existente_carrito[0]
+
+        if agrega_producto.items.filter(producto__pk=producto.pk).exists():
+            producto_agregado.cantidad += 1
+            producto_agregado.save()
+            messages.info(request, "Agregada/s unidad/es")
+            return redirect("jaguarete01:resumen_compra")
+        else:
+            agrega_producto.items.add(producto)
+            messages.info(request, 'Producto agregado al carrito')
+    else:
+        fecha_pedido = timezone.now()
+        agregado_al_pedido = Carrito.objects.create(usuario=request.user, fecha=fecha_pedido)
+        agregado_al_pedido.items.add(producto)
+        messages.info(request, "Producto agregado al carrito")
+        return redirect('jaguarete01:resumen_compra')
+
+
+@login_required
+def quitar_del_carrito(request, pk):
+    producto = get_object_or_404(Producto, pk=pk )
+    producto_existente = Carrito.objects.filter(
+        usuario=request.user, 
+        ya_pedido=False
+    )
+    if producto_existente.exists():
+        quita_producto = producto_existente[0]
+        if quita_producto.items.filter(producto__pk=producto.pk).exists():
+            producto_en_lista = ProductoAgregado.objects.filter(
+                producto=producto,
+                usuario=request.user,
+                ya_agregado=False
+            )[0]
+            producto_en_lista.delete()
+            messages.info(request, "Item \""+producto_en_lista.item.item_name+"\" retirado del carrito")
+            return redirect("jaguarete01:resumen_compra")
+        else:
+            messages.info(request, "Este producto no está en su carrito")
+            return redirect("jaguarete01:producto", pk=pk)
+    else:
+        #add message doesnt have order
+        messages.info(request, "No tiene un carrito")
+        return redirect("jaguarete01:producto", pk = pk)
+
+
+@login_required
+def reducir_cantidad_producto(request, pk):
+    producto = get_object_or_404(Producto, pk=pk )
+    producto_existente = Carrito.objects.filter(
+        usuario = request.user, 
+        ya_pedido = False
+    )
+    if producto_existente.exists():
+        quita_producto = producto_existente[0]
+        if quita_producto.items.filter(producto__pk=producto.pk).exists() :
+            item = ProductoAgregado.objects.filter(
+                producto = producto,
+                usuario = request.user,
+                ya_agregado = False
+            )[0]
+            if item.cantidad > 1:
+                item.cantidad -= 1
+                item.save()
+            else:
+                item.delete()
+            messages.info(request, "La cantidad fue modificada")
+            return redirect("jaguarete01:resumen_compra")
+        else:
+            messages.info(request, "Este item no esta en su lista")
+            return redirect("jaguarete01:resumen_compra")
+    else:
+        #add message doesnt have order
+        messages.info(request, "No tiene un carrito")
+        return redirect("jaguarete01:resumen_compra")
