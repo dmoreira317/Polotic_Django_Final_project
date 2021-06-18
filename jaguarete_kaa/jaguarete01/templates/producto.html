@@ -9,19 +9,20 @@
     <div class="col-md-4">
       <img style="
         width: 250px; height:250px;
-      " src="{% static 'img/estuche_hamburguesa.jpg' %}" alt="..." />
+      " src="{{object.imagen.url}}" alt="..." />
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">Estuche hamburguesa Ecológica</h5>
+        <h5 class="card-title">{{object.titulo}}</h5>
         <p class="card-text">
-          Base: 95 x 95 mm
-          Alto: 62mm
-          Capacidad: –
-          Impresión: Si
+          {{object.categoria_base}}
         </p>
         <p class="card-text">
-          <small class="text-muted">Last updated 3 mins ago</small>
+          {{object.detalle}}
+        </p>
+        <p class="card-text">
+          <small class="text-muted">Creado: {{object.fecha_creacion}}
+          </small>
         </p>
       </div>
     </div>

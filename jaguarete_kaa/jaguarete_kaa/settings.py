@@ -23,6 +23,12 @@ STATIC_DIR = os.path.join(BASE_DIR, "jaguarete01/static/")
 print(STATIC_DIR)
 
 
+# Base url to serve media files
+MEDIA_URL = '/media/'
+
+# Path where media is stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 

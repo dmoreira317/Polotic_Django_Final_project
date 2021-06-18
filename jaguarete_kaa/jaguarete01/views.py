@@ -111,9 +111,10 @@ class VistaProducto(DetailView):
     model = Producto
     template_name = "producto.html"
 
-@login_required(login_url= '/login/')
 class VistaResumenCompra(LoginRequiredMixin, View):
-    def get(self, *args, **kwargs):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    def traer(self, *args, **kwargs):
         try:
             compra = Carrito.objects.get(user=self.request.user, ya_pedido=False)
             context= {

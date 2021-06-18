@@ -13,8 +13,9 @@ class Categoria(models.Model):
 class Producto(models.Model):
     titulo = models.CharField(max_length=100, unique=True)
     categoria_base = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    detalle = models.CharField(max_length=1000, default='N/A')
     precio = models.FloatField()
-    imagen = models.FileField()
+    imagen = models.ImageField(upload_to='uploaded_images')
     fecha_creacion = models.DateTimeField()
 
     def __str__(self):
@@ -32,6 +33,9 @@ class Producto(models.Model):
         return reverse("jaguarete01:sacar_carrito", kwargs={
             'pk' : self.pk
         })
+    def mostrar_imagen(self):
+        with open(self.imagen.path) as fp:
+            return fp.read().replace('\n', '<br>')
 
 class ProductoAgregado(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL,
