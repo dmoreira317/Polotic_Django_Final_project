@@ -5,12 +5,12 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.sessions.models import Session
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, View, CreateView
@@ -39,6 +39,11 @@ def sign_up_form(request):
         form = forms.SignUpForm(request.POST) # creating a variable that receives the POST
         if form.is_valid(): 
             password = form.clean_password2()
+            user = form.save(commit=False)
+            user.save()
+            grupo_estandar = Group.objects.get(name='Estandar')
+            user.groups.add(grupo_estandar)
+            
             form.save()
 
             return redirect('resultado_registro/')
@@ -213,7 +218,10 @@ def reducir_cantidad_producto(request, pk):
         messages.info(request, "No tiene un carrito")
         return redirect("jaguarete01:resumen_compra")
 
-class NuevoProductoView(CreateView):
+class NuevoProductoView(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    
     form_class = NuevoProductoForm
     template_name = 'nuevo_producto.html'
     success_url = 'nuevo_producto_resultado'
