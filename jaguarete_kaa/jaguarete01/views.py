@@ -15,7 +15,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, View, CreateView
 from django.utils import timezone
-from .models import Producto, Carrito, ProductoAgregado
+from .models import Categoria, Producto, Carrito, ProductoAgregado
 from jaguarete01.forms import NuevoProductoForm
 import pprint
 import json

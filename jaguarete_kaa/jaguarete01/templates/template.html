@@ -1,4 +1,5 @@
 {% load static %}
+{% load categorias %}
 
 <html lang="en">
   <head>
@@ -67,7 +68,7 @@
       </ul>
     </nav>
     <!-- Logo, login and register bar -->
-
+   
     <!-- collapsible toggle menu bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -77,8 +78,13 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Categorías</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Categorías
+                </a>
+                <!-- Aca va la inclusion tag -->
+                {% mostrar_categorias %}
+                <!-- hasta aca inclusion tag -->
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'jaguarete01:acerca_de' %}">Acerca de...</a>
