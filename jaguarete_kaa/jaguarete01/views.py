@@ -24,7 +24,28 @@ import random
 
 # Create your views here.
 def index(request):
-    dictionary = {}
+    productos = Producto.objects.all()
+    productos_ordenados = productos.order_by('-fecha_creacion')
+
+    index = 0
+    tres_productos = []
+    while index < 3:
+        un_producto = productos_ordenados[index]
+        tres_productos.append(un_producto)
+        index +=1
+
+    index = 3
+    siete_productos = []
+    while index < 10:
+        un_producto = productos_ordenados[index]
+        siete_productos.append(un_producto)
+        index +=1
+
+    print(productos)
+    dictionary = {
+        'tres_productos': tres_productos,
+        'siete_productos': siete_productos,
+    }
     return render(request, 'index.html', context=dictionary)
 
 def acerca_de(request):
