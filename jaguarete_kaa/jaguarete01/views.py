@@ -1,3 +1,4 @@
+from django import template
 from django.shortcuts import render
 from django.http import HttpResponse # This takes http requests
 from . import forms
@@ -17,6 +18,7 @@ from django.views.generic import ListView, DetailView, View, CreateView
 from django.utils import timezone
 from .models import Categoria, Producto, Carrito, ProductoAgregado
 from jaguarete01.forms import NuevoProductoForm
+from django.db.models import Q
 import pprint
 import json
 import random
@@ -251,3 +253,19 @@ class NuevoProductoView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
 def nuevo_producto_resultado(request):
     dictionary = {}
     return render(request, "nuevo_producto_resultado.html", context=dictionary)
+
+class ResultadoBusqueda(ListView):
+    model = Producto
+    template_name = 'resultado_busqueda.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            queryset = Producto.objects.filter(
+                Q(titulo__icontains=query) | Q(categoria_base__descripcion__icontains=query) | Q(detalle__icontains=query)
+        )
+            print(queryset)
+        else:
+            queryset = Producto.objects.all()
+
+        return queryset

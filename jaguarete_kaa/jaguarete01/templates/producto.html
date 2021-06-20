@@ -4,16 +4,16 @@
 <title>Jaguarete KAA - Acerca de nosotros</title>
 {% endblock %} {% block body %}
 
-<h1 class="text-center mb-5">Jaguarete KAA</h1>
+<h1 class="text-center mb-5">Detalle del producto</h1>
 <div class="container justify-content-center">
 <div class="card mb-3" style="max-width: 1080px">
   <div class="row g-0">
-    <div class="col-md-4">
+    <div class="col-md-4 text-center">
       <img style="
         width: 350px; height:350px;" src="{{object.imagen.url}}" alt="..." />
     </div>
     <div class="col-md-8">
-      <div class="card-body">
+      <div class="card-body text-center">
         <h5 class="card-title">{{object.titulo}}</h5>
         <p class="card-text">
           {{object.categoria_base}}

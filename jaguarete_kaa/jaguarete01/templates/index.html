@@ -4,7 +4,7 @@
 <title>Jaguarete KAA</title>
 {% endblock %} {% block body %}
 
-<h1 class="text-center">
+<h1 class="text-center mb-5 mt-3">
   Bienvenidos! Estos son los últimos productos agregados
 </h1>
 
@@ -18,7 +18,7 @@
     <img style="width: 100%;
       height: 15vw;
       object-fit: cover;" src="{{producto.imagen.url}}" class="card-img-top text-center" alt="..." />
-    <div class="card-body">
+    <div class="card-body text-center">
       <h5 class="card-title">{{producto.titulo}}</h5>
       <p class="card-text">
         {{producto.detalle}}
@@ -34,7 +34,10 @@
 </div>
 
 <!-- 7 items list -->
-<div class="list-group mt-3">
+
+
+<div class="list-group mt-4 mb-5">
+  <h4>Otros productos que pueden interesarle</h4>
   
   {% for producto in siete_productos %}
   <a href="{% url 'jaguarete01:producto' pk=producto.id %}" class="list-group-item list-group-item-action">

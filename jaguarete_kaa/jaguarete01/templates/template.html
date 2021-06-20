@@ -50,19 +50,19 @@
         {% if request.user.is_authenticated %}
         {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'jaguarete01:login'%}">Login</a>
+          <button class="btn btn-outline-success mx-2" type="submit"><a class="nav-link text-white" href="{% url 'jaguarete01:login'%}">Login</a></button>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'jaguarete01:sign_up_form'%}">Registro</a>
+          <button class="btn btn-outline-success mx-2" type="submit"><a class="nav-link text-white" href="{% url 'jaguarete01:registro'%}">Registro</a></button>
         </li>
         {% endif %}
         {% if request.user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'jaguarete01:logout'%}" tabindex="-1">Log Out</a>
+          <button class="btn btn-outline-danger mx-2" type="submit"><a class="nav-link text-white" href="{% url 'jaguarete01:logout'%}">Logout</a></button>
         </li>
         {% endif %}
         <li class="nav-item">
-          <a class="nav-link" href="#" tabindex="-1">Carrito</a>
+          <button class="btn btn-outline-Primary mx-2" type="submit"><a class="nav-link text-white" href="{% url 'jaguarete01:resumen_compra'%}">Carrito</a></button>
         </li>
         
       </ul>
@@ -96,13 +96,13 @@
               </li>
               {% if perms.jaguarete01.can_add_productos %}
               <li class="nav-item">
-                <a class="nav-link " href="{% url 'jaguarete01:nuevo_producto' %}" tabindex="-1" >Nuevo producto</a>
+                <a class="nav-link " href="{% url 'jaguarete01:nuevo_producto' b=b%}" tabindex="-1" >Nuevo producto</a>
               </li>
               {% endif %}
             </ul>
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Buscar</button>
+            <form class="d-flex" action="{% url 'jaguarete01:resultado_busqueda'%}" method="GET">{% csrf_token %}
+              <input class="form-control me-2" type="text" placeholder="Buscar" aria-label="Search" name="q">
+              <button class="btn btn-success" type="submit">Buscar</button>
             </form>
           </div>
         </div>

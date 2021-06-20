@@ -6,7 +6,7 @@
 
 <div class="container justify-content-center col-lg-5 align-items-center">
   <div class="my-5">
-    <h1 class="text-center">Registro</h1>
+    <h1 class="text-center">Registro de usuario</h1>
     <form class="align-items-center mx-3" method="post" novalidate>
       {% csrf_token %} 
       {% for hidden_field in form.hidden_fields %}
@@ -42,7 +42,7 @@
       {% endfor %}
       <div class="form-row mx-4 align-items-center">
         <div class="container text-center">
-          <button type="submit" class="btn btn-danger">Sign up now!</button>
+          <button type="submit" class="btn btn-success mt-2">Regístrese!</button>
         </div>
       </div>
     </form>

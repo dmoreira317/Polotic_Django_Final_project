@@ -8,35 +8,11 @@
 
 <!-- search results, probably add a for loop through all queries. -->
 <div class="list-group mt-3">
-  <a href="#" class="list-group-item list-group-item-action">
-    The current link item
+  {% for producto in object_list %}
+  <a href="{% url 'jaguarete01:producto' pk=producto.id%}" class="list-group-item list-group-item-action">
+    {{ producto.titulo}}
   </a>
-  <a href="#" class="list-group-item list-group-item-action"
-    >A second link item</a
-  >
-  <a href="#" class="list-group-item list-group-item-action"
-    >A second link item</a
-  >
-  <a href="#" class="list-group-item list-group-item-action"
-    >A second link item</a
-  >
-  <a href="#" class="list-group-item list-group-item-action"
-    >A second link item</a
-  >
-  <a href="#" class="list-group-item list-group-item-action"
-    >A third link item</a
-  >
-  <a href="#" class="list-group-item list-group-item-action"
-    >A fourth link item</a
-  >
-  <!--   
-    <a
-      href="#"
-      class="list-group-item list-group-item-action disabled"
-      tabindex="-1"
-      aria-disabled="true"
-      >A disabled link item</a
-    > -->
+  {% endfor %}
 </div>
 
 {% endblock %}
