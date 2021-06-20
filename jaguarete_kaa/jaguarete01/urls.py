@@ -17,7 +17,7 @@ urlpatterns = [
     path("logout/", views.sign_out, name = "logout"),
    
     # Producto y carrito
-    path('producto/<pk>/', views.VistaProducto.as_view(), name='producto'),
+    path('producto/(?P<pk>[0-9]+)$/', views.VistaProducto.as_view(), name='producto'),
     path('resumen_compra/', views.VistaResumenCompra.as_view(), name='resumen_compra'),
     path('agregar_al_carrito/<pk>/', views.agregar_al_carrito, name='agregar_al_carrito'),
     path('quitar_del_carrito/<pk>/', views.quitar_del_carrito, name='quitar_del_carrito'),
