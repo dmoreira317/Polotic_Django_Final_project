@@ -12,6 +12,10 @@
   <a href="{% url 'jaguarete01:producto' pk=producto.id%}" class="list-group-item list-group-item-action">
     {{ producto.titulo}}
   </a>
+  {% empty%}
+  <p class="text-center">
+    Perdona, no encontramos lo que buscabas, puedes probar de nuevo si lo deseas.
+</p>
   {% endfor %}
 </div>
 

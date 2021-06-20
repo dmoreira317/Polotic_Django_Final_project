@@ -1,4 +1,5 @@
 from django import template
+from django.db.models.query import EmptyQuerySet
 from django.shortcuts import render
 from django.http import HttpResponse # This takes http requests
 from . import forms
