@@ -41,5 +41,9 @@ urlpatterns = [
     path('actualizar_producto/<int:pk>', views.EditarProductoView.as_view(), name= 'actualizar_producto'),
     path('actualizar_producto/producto_actualizado', views.producto_actualizado, name= 'producto_actualizado'),
 
+    # Eliminar producto
+    path('eliminar_producto/<int:pk>', views.EliminarProductoView.as_view(), name= 'eliminar_producto'),
+    path('eliminar_producto/producto_eliminado', views.producto_eliminado, name= 'producto_eliminado'),
+
     
 ]

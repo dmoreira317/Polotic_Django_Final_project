@@ -15,7 +15,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView, View, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, View, CreateView, UpdateView, DeleteView
 from django.utils import timezone
 from .models import Categoria, Producto, Carrito, ProductoAgregado
 from jaguarete01.forms import NuevoProductoForm
@@ -302,3 +302,20 @@ class EditarProductoView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView
 def producto_actualizado(request):
     dictionary = {}
     return render(request, "producto_actualizado.html", context=dictionary)
+
+
+class EliminarProductoView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    permission_required = 'jaguarete01.can_add_productos'
+    
+    model = Producto
+    template_name = 'eliminar_producto.html'
+    success_url = 'producto_eliminado'
+    fields=[
+            'titulo','categoria_base','detalle','precio','imagen'
+        ]
+
+def producto_eliminado(request):
+    dictionary = {}
+    return render(request, "producto_eliminado.html", context=dictionary)
