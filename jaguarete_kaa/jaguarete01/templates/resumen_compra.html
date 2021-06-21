@@ -5,8 +5,6 @@
 {% endblock %}
 
 {% block body %}
-
-<main>
     <div class= "container">
         <div class="">
     <h3>
@@ -16,14 +14,14 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Item Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Total Item Price</th>
+            <th scope="col">Producto: </th>
+            <th scope="col">Precio: </th>
+            <th scope="col">Cantidad: </th>
+            <th scope="col">Total: </th>
         </tr>
         </thead>
         <tbody>
-        {% for item in object.productos.all %}
+        {% for item in compra.objects.all %}
         <tr>
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{ item.producto.titulo }}</td>
@@ -33,14 +31,14 @@
             </td>
             <td>
                 <a href="{% url 'jaguarete01:reducir_cantidad_producto' producto.producto.pk %}"><i >reducir cantidad</i></a>
-                {{ producto.cantidad }}
+                {{ item.producto.cantidad }}
                 <a href="{% url 'jaguarete01:agregar_al_carrito' producto.producto.pk  %}"><i class="fas fa-plus ml-2">agregar</i></a>
             </td>
             <td>
-                ${{ producto.precio_total_producto}}
+                ${{ item.producto.precio_total_producto}}
      
              <a href="{% url 'jaguarete01:quitar_del_carrito' producto.producto.pk  %}">
-                <i>quitar</i>
+                <i>Quitar</i>
              </a>
 
             </td>
@@ -78,6 +76,4 @@
 
         </div>
     </div>
-</main>
-
-{% endblock content %}
+{% endblock %}

@@ -144,9 +144,9 @@ class VistaProducto(DetailView):
 class VistaResumenCompra(LoginRequiredMixin, View):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
-    def traer(self, *args, **kwargs):
+    def get(self, *args, **kwargs):
         try:
-            compra = Carrito.objects.get(user=self.request.user, ya_pedido=False)
+            compra = Carrito.objects.get(usuario=self.request.user, ya_pedido=False)
             context= {
                 'objeto': compra
             }
@@ -164,23 +164,24 @@ def agregar_al_carrito(request, pk):
         ya_agregado = False
     )
 
-    producto_existente_carrito = Carrito.objects.filter(user=request.user, ya_pedido=False)
+    producto_existente_carrito = Carrito.objects.filter(usuario=request.user, ya_pedido=False)
 
     if producto_existente_carrito.exists():
         agrega_producto = producto_existente_carrito[0]
 
-        if agrega_producto.items.filter(producto__pk=producto.pk).exists():
+        if agrega_producto.productos.filter(producto__pk=producto.pk).exists():
             producto_agregado.cantidad += 1
             producto_agregado.save()
             messages.info(request, "Agregada/s unidad/es")
             return redirect("jaguarete01:resumen_compra")
         else:
-            agrega_producto.items.add(producto)
+            agrega_producto.productos.add(producto_agregado)
             messages.info(request, 'Producto agregado al carrito')
+            return redirect("jaguarete01:resumen_compra")
     else:
         fecha_pedido = timezone.now()
         agregado_al_pedido = Carrito.objects.create(usuario=request.user, fecha=fecha_pedido)
-        agregado_al_pedido.items.add(producto)
+        agregado_al_pedido.productos.add(producto_agregado)
         messages.info(request, "Producto agregado al carrito")
         return redirect('jaguarete01:resumen_compra')
 
@@ -194,14 +195,14 @@ def quitar_del_carrito(request, pk):
     )
     if producto_existente.exists():
         quita_producto = producto_existente[0]
-        if quita_producto.items.filter(producto__pk=producto.pk).exists():
+        if quita_producto.objects.filter(producto__pk=producto.pk).exists():
             producto_en_lista = ProductoAgregado.objects.filter(
                 producto=producto,
                 usuario=request.user,
                 ya_agregado=False
             )[0]
             producto_en_lista.delete()
-            messages.info(request, "Item \""+producto_en_lista.item.item_name+"\" retirado del carrito")
+            messages.info(request, "Item \""+producto_en_lista.objects.item_name+"\" retirado del carrito")
             return redirect("jaguarete01:resumen_compra")
         else:
             messages.info(request, "Este producto no está en su carrito")
