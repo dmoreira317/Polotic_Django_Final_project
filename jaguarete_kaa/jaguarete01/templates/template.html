@@ -79,7 +79,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Categorías
                 </a>
                 <!-- Aca va la inclusion tag -->
@@ -96,7 +96,7 @@
               </li>
               {% if perms.jaguarete01.can_add_productos %}
               <li class="nav-item">
-                <a class="nav-link " href="{% url 'jaguarete01:nuevo_producto' b=b%}" tabindex="-1" >Nuevo producto</a>
+                <a class="nav-link " href="{% url 'jaguarete01:nuevo_producto'%}" tabindex="-1" >Nuevo producto</a>
               </li>
               {% endif %}
             </ul>

@@ -19,7 +19,7 @@ from django.views.generic import ListView, DetailView, View, CreateView
 from django.utils import timezone
 from .models import Categoria, Producto, Carrito, ProductoAgregado
 from jaguarete01.forms import NuevoProductoForm
-from django.db.models import Q
+from django.db.models import Q, F
 import pprint
 import json
 import random
@@ -265,6 +265,22 @@ class ResultadoBusqueda(ListView):
             queryset = Producto.objects.filter(
                 Q(titulo__icontains=query) | Q(categoria_base__descripcion__icontains=query) | Q(detalle__icontains=query)
         )
+            print(queryset)
+        else:
+            queryset = Producto.objects.all()
+
+        return queryset
+
+
+class ResultadoBusquedaCategoria(ListView):
+    model = Producto
+    template_name = 'resultado_busqueda_categoria.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        print(query)
+        if query:
+            queryset = Producto.objects.filter(Q(categoria_base__descripcion__icontains=query))
             print(queryset)
         else:
             queryset = Producto.objects.all()

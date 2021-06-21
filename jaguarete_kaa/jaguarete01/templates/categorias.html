@@ -1,7 +1,13 @@
 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
     {% for categoria in categorias %}
         
-     <li><a class="dropdown-item" href="#">{{categoria}}</a></li>
+     <li>
+        
+        <form action="{% url 'jaguarete01:resultado_busqueda_categoria' %}" method="GET">{% csrf_token %}
+              <input type="hidden" name="q" value={{categoria}}>
+              <button class="btn"><a class="dropdown-item" role="button">{{categoria}}</a></button>
+        </form>
+    </li>
   
     {% endfor %}
     

@@ -23,6 +23,7 @@ urlpatterns = [
     path('quitar_del_carrito/<pk>/', views.quitar_del_carrito, name='quitar_del_carrito'),
     path('reducir_cantidad_producto/<pk>/', views.reducir_cantidad_producto, name='reducir_cantidad_producto'),
     path('resultado_busqueda/', views.ResultadoBusqueda.as_view(), name='resultado_busqueda'),
+    path('resultado_busqueda_categoria/', views.ResultadoBusquedaCategoria.as_view(), name='resultado_busqueda_categoria'),
 
     # Nuevo producto
     path('nuevo_producto/', views.NuevoProductoView.as_view(), name= 'nuevo_producto'),
