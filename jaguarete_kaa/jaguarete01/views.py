@@ -15,7 +15,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView, View, CreateView
+from django.views.generic import ListView, DetailView, View, CreateView, UpdateView
 from django.utils import timezone
 from .models import Categoria, Producto, Carrito, ProductoAgregado
 from jaguarete01.forms import NuevoProductoForm
@@ -286,3 +286,19 @@ class ResultadoBusquedaCategoria(ListView):
             queryset = Producto.objects.all()
 
         return queryset
+
+class EditarProductoView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    permission_required = 'jaguarete01.can_add_productos'
+    
+    model = Producto
+    template_name = 'actualizar_producto.html'
+    success_url = 'producto_actualizado'
+    fields=[
+            'titulo','categoria_base','detalle','precio','imagen'
+        ]
+
+def producto_actualizado(request):
+    dictionary = {}
+    return render(request, "producto_actualizado.html", context=dictionary)

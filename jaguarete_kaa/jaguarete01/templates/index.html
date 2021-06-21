@@ -28,6 +28,9 @@
         {{producto.detalle}}
       </p>
       <p class="card-text">
+        Precio: ${{producto.precio}} ARS
+      </p>
+      <p class="card-text">
         <small class="text-muted">{{producto.fecha_creacion}}</small>
       </p>
       <button type="submit" class="btn btn-success"><a class="text-white" href="{% url 'jaguarete01:producto' pk=producto.id %}"> Más información</a></button>
