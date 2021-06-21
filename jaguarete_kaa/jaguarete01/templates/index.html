@@ -15,11 +15,15 @@
     {% for producto in tres_productos %}
   
   <div class="card">
+    <a href="{% url 'jaguarete01:producto' pk=producto.id %}">
     <img style="width: 100%;
       height: 15vw;
       object-fit: cover;" src="{{producto.imagen.url}}" class="card-img-top text-center" alt="..." />
+    </a>
     <div class="card-body text-center">
+      <a href="{% url 'jaguarete01:producto' pk=producto.id %}">
       <h5 class="card-title">{{producto.titulo}}</h5>
+    </a>
       <p class="card-text">
         {{producto.detalle}}
       </p>
