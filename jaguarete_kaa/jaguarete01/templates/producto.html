@@ -30,10 +30,10 @@
         </p>
         <button class="btn btn-primary text-center">Agregar al carrito</button>
         {% if request.user.is_authenticated and  perms.jaguarete01.can_add_productos %}
-        <a href="{% url 'jaguarete01:actualizar_producto' pk=object.id%}"><button class="btn btn-primary text-center">Editar producto</button></a>
+        <a href="{% url 'jaguarete01:actualizar_producto' pk=object.id%}"><button class="btn btn-warning text-center">Editar producto</button></a>
         {% endif %}
         {% if request.user.is_authenticated and  perms.jaguarete01.can_add_productos %}
-        <a href="{% url 'jaguarete01:eliminar_producto' pk=object.id%}"><button class="btn btn-primary text-center">Eliminar producto</button></a>
+        <a href="{% url 'jaguarete01:eliminar_producto' pk=object.id%}"><button class="btn btn-danger text-center">Eliminar producto</button></a>
         {% endif %}
       </div>
     </div>
