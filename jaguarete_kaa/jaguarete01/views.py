@@ -150,7 +150,6 @@ class VistaResumenCompra(LoginRequiredMixin, View):
             contexto= {
                 'objeto': compra
             }
-            print(compra)
             return render(self.request, 'resumen_compra.html', context=contexto)
         except ObjectDoesNotExist:
             messages.error(self.request, 'No tiene un carrito todavía')
@@ -187,31 +186,28 @@ def agregar_al_carrito(request, pk):
         return redirect('jaguarete01:resumen_compra')
 
 
-# @login_required
-# def quitar_del_carrito(request, pk):
-#     producto = get_object_or_404(Producto, pk=pk )
-#     producto_existente = Carrito.objects.filter(
-#         usuario=request.user, 
-#         ya_pedido=False
-#     )
-#     if producto_existente.exists():
-#         quita_producto = producto_existente[0]
-#         if quita_producto.objects.filter(producto__pk=producto.pk).exists():
-#             producto_en_lista = ProductoAgregado.objects.filter(
-#                 producto=producto,
-#                 usuario=request.user,
-#                 ya_agregado=False
-#             )[0]
-#             producto_en_lista.delete()
-#             messages.info(request, "Item \""+producto_en_lista.objects.item_name+"\" retirado del carrito")
-#             return redirect("jaguarete01:resumen_compra")
-#         else:
-#             messages.info(request, "Este producto no está en su carrito")
-#             return redirect("jaguarete01:producto", pk=pk)
-#     else:
-#         #add message doesnt have order
-#         messages.info(request, "No tiene un carrito")
-#         return redirect("jaguarete01:producto", pk = pk)
+@login_required
+def quitar_del_carrito(request, pk):
+    producto = get_object_or_404(Producto, pk=pk )
+    producto_existente = Carrito.objects.filter(usuario=request.user, ya_pedido=False)
+
+    if producto_existente.exists():
+        quita_producto = producto_existente[0]
+        if quita_producto.productos.filter(producto__pk=producto.pk).exists():
+            producto_en_lista = ProductoAgregado.objects.filter(   producto=producto,
+                usuario=request.user,
+                ya_agregado=False
+            )[0]
+            producto_en_lista.delete()
+            messages.info(request, "Item \""+producto_en_lista.producto.titulo+"\" retirado del carrito")
+            return redirect("jaguarete01:resumen_compra")
+        else:
+            messages.info(request, "Este producto no está en su carrito")
+            return redirect("jaguarete01:producto", pk=pk)
+    else:
+        #add message doesnt have order
+        messages.info(request, "No tiene un carrito")
+        return redirect("jaguarete01:producto", pk = pk)
 
 
 # @login_required

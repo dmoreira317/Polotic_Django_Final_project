@@ -38,10 +38,10 @@
             </td>
             <td>
                 ${{ item.precio_total_producto}}
-<!--      
-             <a href="#">
-                <i>Quitar</i>
-             </a> -->
+     
+             <button class="btn btn-danger"><a href="{% url 'jaguarete01:quitar_del_carrito' pk=item.producto.id %}">
+                X
+             </a></button>
 
             </td>
         </tr>
@@ -66,7 +66,7 @@
         </tr>
          <tr>
             <td colspan="5">
-                <a href="#" class="btn btn-warning float-right ml-2">Pagar</a>
+                <a href="#" class="btn btn-success float-right ml-2">Finalizar compra</a>
                 <a href="/" class="btn btn-primary float-right">Seguir comprando</a>
             </td>
         </tr>
