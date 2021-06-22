@@ -21,7 +21,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for item in compra.objects.all %}
+        {% for item in objeto.productos.all %}
         <tr>
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{ item.producto.titulo }}</td>
@@ -30,16 +30,18 @@
             
             </td>
             <td>
-                <a href="{% url 'jaguarete01:reducir_cantidad_producto' producto.producto.pk %}"><i >reducir cantidad</i></a>
-                {{ item.producto.cantidad }}
-                <a href="{% url 'jaguarete01:agregar_al_carrito' producto.producto.pk  %}"><i class="fas fa-plus ml-2">agregar</i></a>
+
+                {{ item.cantidad }}
+                <!-- <a href="#"><i >reducir cantidad</i></a>
+                
+                <a href="#"><i class="fas fa-plus ml-2">agregar</i></a> -->
             </td>
             <td>
-                ${{ item.producto.precio_total_producto}}
-     
-             <a href="{% url 'jaguarete01:quitar_del_carrito' producto.producto.pk  %}">
+                ${{ item.precio_total_producto}}
+<!--      
+             <a href="#">
                 <i>Quitar</i>
-             </a>
+             </a> -->
 
             </td>
         </tr>
