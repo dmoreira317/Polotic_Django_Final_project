@@ -209,6 +209,24 @@ def quitar_del_carrito(request, pk):
         messages.info(request, "No tiene un carrito")
         return redirect("jaguarete01:producto", pk = pk)
 
+@login_required
+def eliminar_carrito(request):
+    productos_del_usuario = Carrito.objects.filter(usuario=request.user, ya_pedido=False)
+
+    if productos_del_usuario.exists():
+        Carrito.objects.filter(usuario=request.user, ya_pedido=False).delete()
+        ProductoAgregado.objects.filter(usuario=request.user, ya_agregado=False).delete()
+        Carrito.objects.create(usuario=request.user)
+
+        return redirect("jaguarete01:carrito_eliminado")
+    else:
+        #add message doesnt have order
+        messages.info(request, "No tiene un carrito")
+        return redirect("/")
+
+def carrito_eliminado(request):
+    dictionary = {}
+    return render(request, "carrito_eliminado.html", context=dictionary)
 
 @login_required
 def reducir_cantidad_producto(request, pk):
