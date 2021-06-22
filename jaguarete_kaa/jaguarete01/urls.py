@@ -26,7 +26,7 @@ urlpatterns = [
     # Carrito
     path('agregar_al_carrito/<pk>/', views.agregar_al_carrito, name='agregar_al_carrito'),
     path('quitar_del_carrito/<pk>/', views.quitar_del_carrito, name='quitar_del_carrito'),
-    # path('reducir_cantidad_producto/<pk>/', views.reducir_cantidad_producto, name='reducir_cantidad_producto'),
+    path('reducir_cantidad_producto/<pk>/', views.reducir_cantidad_producto, name='reducir_cantidad_producto'),
     path('resumen_compra/', views.VistaResumenCompra.as_view(), name='resumen_compra'),
     
     # Búsqueda

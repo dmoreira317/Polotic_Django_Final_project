@@ -210,35 +210,35 @@ def quitar_del_carrito(request, pk):
         return redirect("jaguarete01:producto", pk = pk)
 
 
-# @login_required
-# def reducir_cantidad_producto(request, pk):
-#     producto = get_object_or_404(Producto, pk=pk )
-#     producto_existente = Carrito.objects.filter(
-#         usuario = request.user, 
-#         ya_pedido = False
-#     )
-#     if producto_existente.exists():
-#         quita_producto = producto_existente[0]
-#         if quita_producto.items.filter(producto__pk=producto.pk).exists() :
-#             item = ProductoAgregado.objects.filter(
-#                 producto = producto,
-#                 usuario = request.user,
-#                 ya_agregado = False
-#             )[0]
-#             if item.cantidad > 1:
-#                 item.cantidad -= 1
-#                 item.save()
-#             else:
-#                 item.delete()
-#             messages.info(request, "La cantidad fue modificada")
-#             return redirect("jaguarete01:resumen_compra")
-#         else:
-#             messages.info(request, "Este item no esta en su lista")
-#             return redirect("jaguarete01:resumen_compra")
-#     else:
-#         #add message doesnt have order
-#         messages.info(request, "No tiene un carrito")
-#         return redirect("jaguarete01:resumen_compra")
+@login_required
+def reducir_cantidad_producto(request, pk):
+    producto = get_object_or_404(Producto, pk=pk )
+    producto_existente = Carrito.objects.filter(
+        usuario = request.user, 
+        ya_pedido = False
+    )
+    if producto_existente.exists():
+        quita_producto = producto_existente[0]
+        if quita_producto.productos.filter(producto__pk=producto.pk).exists() :
+            item = ProductoAgregado.objects.filter(
+                producto = producto,
+                usuario = request.user,
+                ya_agregado = False
+            )[0]
+            if item.cantidad > 1:
+                item.cantidad -= 1
+                item.save()
+            else:
+                item.delete()
+            messages.info(request, "La cantidad fue modificada")
+            return redirect("jaguarete01:resumen_compra")
+        else:
+            messages.info(request, "Este item no esta en su lista")
+            return redirect("jaguarete01:resumen_compra")
+    else:
+        #add message doesnt have order
+        messages.info(request, "No tiene un carrito")
+        return redirect("jaguarete01:resumen_compra")
 
 class NuevoProductoView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     login_url = '/login/'

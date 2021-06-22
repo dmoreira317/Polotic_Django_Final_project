@@ -7,8 +7,8 @@
 {% block body %}
     <div class= "container">
         <div class="">
-    <h3>
-        <strong>Su Carrito</strong>
+    <h3 class="mb-3">
+        <strong>Su carrito de compras, {{request.user.first_name}}</strong>
     </h3>
     <table class="table">
         <thead>
@@ -30,19 +30,19 @@
             
             </td>
             <td>
+                <a href="{% url 'jaguarete01:reducir_cantidad_producto' pk=item.producto.id%}"><i class="fas fa-minus mr-3"></i></a>
 
-                {{ item.cantidad }}
-                <!-- <a href="#"><i >reducir cantidad</i></a>
-                
-                <a href="#"><i class="fas fa-plus ml-2">agregar</i></a> -->
+                <span class="mx-2"><b>{{ item.cantidad }}</b></span>
+
+                <a href="{% url 'jaguarete01:agregar_al_carrito' pk=item.producto.id %}"><i class="fas fa-plus ml-4"></i></a>
             </td>
             <td>
                 ${{ item.precio_total_producto}}
-     
-             <button class="btn btn-danger"><a href="{% url 'jaguarete01:quitar_del_carrito' pk=item.producto.id %}">
-                X
-             </a></button>
-
+            </td>
+            <td>
+             <span class="badge bg-danger"><a class="text-white" href="{% url 'jaguarete01:quitar_del_carrito' pk=item.producto.id %}">
+                Eliminar producto
+             </a></span>
             </td>
         </tr>
 

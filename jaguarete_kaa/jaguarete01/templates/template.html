@@ -57,6 +57,10 @@
         </li>
         {% endif %}
         {% if request.user.is_authenticated %}
+        
+        <li class="nav-item">
+          <p class="text-white">Hola, {{request.user.first_name}}!</p>
+         </li>
         <li class="nav-item">
           <button class="btn btn-outline-danger mx-2" type="submit"><a class="nav-link text-white" href="{% url 'jaguarete01:logout'%}">Logout</a></button>
         </li>
