@@ -1,5 +1,5 @@
 ## Jaguarete KAA Site
-This project was built as a final project for Polotic, an academy from Argentina. It includes user managment and a shopping cart as main features, which goes up to the cart itself, I haven´t developed the checkout yet. 
+This project was built as a final project for Polotic, an academy from Argentina. It includes user managment and a shopping cart as main features, which goes up to the cart itself, I haven't developed the checkout yet. 
 
 #### Features
 - Full user management, sign up, login, logout, permissions, groups.
